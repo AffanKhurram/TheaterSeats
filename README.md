@@ -9,6 +9,6 @@ This does not backtrack, meaning that the seats are assigned on a first come fir
 To run this, you need some form of Python 3 (I used Python 3.10.0, but other versions should work as well)<br>
 The command to run this is:
 ```shell
-python3 theater.py in.txt
+python theater.py in.txt
 ```
 Here, you can replace in.txt with the path to your input file
