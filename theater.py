@@ -28,11 +28,36 @@ with open(file_name, 'r') as f:
                 assigned_seats = [chr(ord('A') + idx) + str(j) for j in range(start+1, start+num+1)]
                 assigned[identifier] = assigned_seats
                 break
-            # elif empty[idx] > 
+            
         # Otherwise, try to break up the group
         if not placed:
-            pass
-        
+            empty_t = []
+            for index, e in enumerate(empty):
+                empty_t.append((index, e))
+            empty_t.sort(key=lambda x: x[1], reverse=True)
+            num_left = num
+            for index, e in empty_t:
+                if num_left <= 0:
+                    break
+                if e > num_left:
+                    start = seats[index].index('e')
+                    buffer = min(3, 20 - (start + num_left))
+                    seats[index][:start] + ('t' * (num_left + buffer)) + seats[index][start+num_left:]
+                    empty[index] -= num_left
+                    assigned_seats = [chr(ord('A') + index) + str(j) for j in range(start+1, start+num_left+1)]
+                    assigned[identifier] = assigned_seats
+                else:
+                    num_left = max(0, num_left - e)
+                    start = seats[index].index('e')
+                    buffer = min(3, 20 - (start + e - num_left))
+                    seats[index][:start] + ('t' * (e-num_left + buffer)) + seats[index][start+e-num_left:]
+                    empty[index] -= e - num_left
+                    assigned_seats = [chr(ord('A') + index) + str(j) for j in range(start+1, start+e-num_left+1)]
+                    assigned[identifier] = assigned_seats
+            
+
+
+
 p = ''
 for key, val in assigned.items():
     p += key + ' ' + ','.join(val) + '\n'
